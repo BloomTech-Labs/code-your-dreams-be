@@ -26,9 +26,11 @@ app.use(
   );
 
 // Routers
+const indexRouter = require("./index/indexRouter");
 const startRouter = require('./routes/start');
 
 // Application routes
+app.use('/', indexRouter);
 app.use('/start', startRouter);
 
 // Server
