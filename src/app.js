@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const express = require('express');
 const logger = require('morgan');
+const { handleError } = require('./middleware');
 
 // Middleware/service inits
 const app = express();
@@ -32,6 +33,9 @@ const startRouter = require('./routes/start');
 // Application routes
 app.use('/', indexRouter);
 app.use('/start', startRouter);
+
+// Error Handler
+app.use(handleError);
 
 // Server
 app.listen(PORT, () => {
