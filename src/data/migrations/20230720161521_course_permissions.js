@@ -7,7 +7,13 @@ exports.up = async (knex) => {
       .createTable('course_permissions', (table) => {
         table.increments('id').notNullable().unique().primary()
         table.integer('chapter_id').notNullable()
-        table.integer('course_id').notNullable()
+        table
+            .integer('course_id')
+            .notNullable()
+            .references('id')
+            .inTable('courses')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE')
         table.boolean('access_granted').notNullable()
         table.timestamps(true, true)
       })

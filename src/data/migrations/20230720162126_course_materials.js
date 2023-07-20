@@ -7,7 +7,12 @@ exports.up = async (knex) => {
       .createTable('course_materials', (table) => {
         table.string('id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
-        table.integer('material_type_id').notNullable()
+        table.integer('material_type_id')
+            .notNullable()
+            .references('id')
+            .inTable('material_types')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE');
         table.text('description').notNullable()
         table.string('material_link').notNullable()
         table.timestamps(true, true)

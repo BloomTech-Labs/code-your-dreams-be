@@ -8,7 +8,12 @@ exports.up = async (knex) => {
         table.increments('id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
         table.text('description').notNullable()
-        table.integer('material_id')
+        table
+            .integer('material_id')
+            .references('id')
+            .inTable('course_materials')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE')
         table.timestamps(true, true)
       })
   }

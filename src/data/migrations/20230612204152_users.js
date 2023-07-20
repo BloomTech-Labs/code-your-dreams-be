@@ -5,7 +5,12 @@ exports.up = async (knex) => {
         table.string('name', 200).notNullable()
         table.string('email', 200).notNullable().unique()
         table.string('role').notNullable()
-        table.integer('chapter_id')
+        table
+          .integer('chapter_id')
+          .references('id')
+          .inTable('chapters')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
         table.timestamps(true, true)
       })
   }
