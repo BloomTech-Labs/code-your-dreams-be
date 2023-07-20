@@ -6,7 +6,13 @@ exports.up = async (knex) => {
     await knex.schema
       .createTable('course_permissions', (table) => {
         table.increments('id').notNullable().unique().primary()
-        table.integer('chapter_id').notNullable()
+        table
+            .integer('chapter_id')
+            .notNullable()
+            .references('id')
+            .inTable('chapters')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE');
         table
             .integer('course_id')
             .notNullable()
