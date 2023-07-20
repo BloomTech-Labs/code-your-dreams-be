@@ -5,7 +5,7 @@
 exports.up = async (knex) => {
     await knex.schema
       .createTable('material_types', (table) => {
-        table.string('id').notNullable().unique().primary()
+        table.increments('id').notNullable().unique().primary()
         table.string('material_type', 200).notNullable()
         table.timestamps(true, true)
       })

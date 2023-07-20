@@ -5,7 +5,7 @@
 exports.up = async (knex) => {
     await knex.schema
       .createTable('course_materials', (table) => {
-        table.string('id').notNullable().unique().primary()
+        table.increments('id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
         table.integer('material_type_id')
             .notNullable()
