@@ -7,7 +7,15 @@ exports.up = async (knex) => {
       .createTable('course_materials', (table) => {
         table.increments('id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
-        table.integer('material_type_id')
+        table
+            .integer('course_id')
+            .notNullable()
+            .references('id')
+            .inTable('courses')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE')
+        table
+            .integer('material_type_id')
             .notNullable()
             .references('id')
             .inTable('material_types')
