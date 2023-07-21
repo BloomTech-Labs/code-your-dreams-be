@@ -29,10 +29,12 @@ app.use(
 // Routers
 const indexRouter = require("./index/indexRouter");
 const startRouter = require('./routes/start');
+const usersRouter = require("./users/usersRouter");
 
 // Application routes
 app.use('/', indexRouter);
 app.use('/start', startRouter);
+app.use('/users', usersRouter);
 
 // Error Handler
 app.use(handleError);

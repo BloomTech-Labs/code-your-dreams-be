@@ -1,22 +1,22 @@
 const db = require('../data/db-config');
 
 // CREATE NEW USER
-export const createUser = (userData) => {
+const createUser = (userData) => {
     return db('users').insert(userData).returning('*');
 }
 
 // GET ALL USERS
-export const getAllUsers = () => {
+const getAllUsers = () => {
     return db('users');
 }
 
 // GET USER BY ID
-export const getUserById = (id) => {
+const getUserById = (id) => {
     return db('users').where({ id }).first().select('*');
 }
 
 // UPDATE USER
-export const updateUser = (id, newUserData) => {
+const updateUser = (id, newUserData) => {
     return db('users')
         .where({ auth0_id: id })
         .first()
@@ -25,6 +25,14 @@ export const updateUser = (id, newUserData) => {
 }
 
 // DELETE USER
-export const deleteUser = (id) => {
+const deleteUser = (id) => {
     return db('profiles').where({ id }).del();
 }
+
+module.exports = {
+    createUser,
+    getAllUsers,
+    getUserById,
+    updateUser,
+    deleteUser
+};
