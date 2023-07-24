@@ -26,7 +26,7 @@ const updateUser = (id, newUserData) => {
 
 // DELETE USER
 const deleteUser = (id) => {
-    return db('profiles').where({ id }).del();
+    return db('users').where({ id }).del();
 }
 
 module.exports = {
