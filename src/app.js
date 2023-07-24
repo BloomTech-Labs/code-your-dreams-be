@@ -27,14 +27,24 @@ app.use(
   );
 
 // Routers
-const indexRouter = require("./index/indexRouter");
+const indexRouter = require('./index/indexRouter');
 const startRouter = require('./routes/start');
-const usersRouter = require("./users/usersRouter");
+const chaptersRouter = require('./chapters/chaptersRouter');
+const usersRouter = require('./users/usersRouter');
+const materialTypesRouter = require('./materialTypes/materialTypesRouter');
+const coursesRouter = require('./courses/coursesRouter');
+const coursePermissionsRouter = require('./coursePermissions/coursePermissionsRouter');
+const courseMaterials = require('./courseMaterials/courseMaterialsRouter');
 
 // Application routes
 app.use('/', indexRouter);
 app.use('/start', startRouter);
+app.use('/chapters', chaptersRouter);
 app.use('/users', usersRouter);
+app.use('/materialTypes', materialTypesRouter);
+app.use('/courses', coursesRouter);
+app.use('/coursePermissions', coursePermissionsRouter);
+app.use('/courseMaterials', courseMaterials);
 
 // Error Handler
 app.use(handleError);
