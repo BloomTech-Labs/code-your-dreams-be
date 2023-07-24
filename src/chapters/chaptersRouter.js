@@ -28,7 +28,7 @@ router.post('/create', function (req, res) {
 router.get('/:id', function (req, res) {
     Chapters.getChapterById(req.params.id)
         .then((response) => {
-            res.status(200).json(response[0]);
+            res.status(200).json(response);
         })
         .catch((err) => {
             res.status(500).json(err);

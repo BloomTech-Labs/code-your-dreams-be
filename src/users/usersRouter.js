@@ -28,7 +28,8 @@ router.post('/create', function (req, res) {
 router.get('/:id', function (req, res) {
     Users.getUserById(req.params.id)
         .then((response) => {
-            res.status(200).json(response[0]);
+            console.log(response);
+            res.status(200).json(response);
         })
         .catch((err) => {
             res.status(500).json(err);
