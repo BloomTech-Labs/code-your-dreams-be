@@ -12,7 +12,7 @@ const getAllUsers = () => {
 
 // GET USER BY ID
 const getUserById = (id) => {
-    return db('users').where({ id }).first().select('*');
+    return db('users').where({ auth0_id: id }).first().select('*');
 }
 
 // UPDATE USER

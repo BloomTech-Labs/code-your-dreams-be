@@ -25,9 +25,36 @@ router.post('/create', function (req, res) {
 })
 
 // Get user by ID
+router.get('/:id', function (req, res) {
+    Users.getUserById(req.params.id)
+        .then((response) => {
+            res.status(200).json(response[0]);
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        })
+})
 
 // Update user
+router.post('/update/:id', function (req, res) {
+    Users.updateUser(req.params.id, req.body)
+        .then((response) => {
+            res.status(200).json(response);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: err.message });
+        })
+})
 
 // Delete user
+router.delete('/delete/:id', function (req, res) {
+    Users.deleteUser(req.params.id)
+        .then((response) => {
+            res.status(200).json(response);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: err.message });
+        })
+})
 
 module.exports = router;
