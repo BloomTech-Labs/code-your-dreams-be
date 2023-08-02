@@ -4,6 +4,7 @@ const Users = require('./usersModel');
 
 // Get all users
 router.get('/', function (req, res) {
+    console.log(req.auth.payload);
     Users.getAllUsers()
         .then((response) => {
             res.status(200).json(response);
