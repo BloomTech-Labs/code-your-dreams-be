@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const express = require('express');
 const logger = require('morgan');
-const { handleError } = require('./middleware');
+const { checkJwt, handleError } = require('./middleware');
 
 // Middleware/service inits
 const app = express();
@@ -25,6 +25,7 @@ app.use(
       origin: '*',
     })
   );
+app.use(checkJwt);
 
 // Routers
 const indexRouter = require('./index/indexRouter');

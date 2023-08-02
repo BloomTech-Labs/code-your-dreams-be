@@ -5,6 +5,14 @@ const checkJwt = auth({
     issuerBaseURL: process.env.AUTH0_ISSUER_URL,
   });
 
+const adminRequired = (req, res, next) => {
+  if (["super-admin", "admin"].some(i => req.auth.payload.userRoles.includes(i))) {
+    return next();
+  }
+
+  return res.status(403).send('Forbidden');
+};
+
 const handleError = (err, req, res, next) => {
     const fallbackErrorMessage = 'Uh oh! Something went wrong.';
     
