@@ -12,13 +12,13 @@ const getAllCourses = () => {
 
 // GET COURSE BY ID
 const getCourseById = (id) => {
-    return db('courses').where({ auth0_id: id }).first().select('*');
+    return db('courses').where({ id: id }).first().select('*');
 }
 
 // UPDATE COURSE
 const updateCourse = (id, newCourseData) => {
     return db('courses')
-        .where({ auth0_id: id })
+        .where({ id: id })
         .first()
         .update(newCourseData)
         .returning('*');

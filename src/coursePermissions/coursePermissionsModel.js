@@ -12,13 +12,13 @@ const getAllCoursePermissions = () => {
 
 // GET COURSE PERMISSION BY ID
 const getCoursePermissionById = (id) => {
-    return db('course_permissions').where({ auth0_id: id }).first().select('*');
+    return db('course_permissions').where({ id: id }).first().select('*');
 }
 
 // UPDATE COURSE PERMISSION
 const updateCoursePermission = (id, newCoursePermissionData) => {
     return db('course_permissions')
-        .where({ auth0_id: id })
+        .where({ id: id })
         .first()
         .update(newCoursePermissionData)
         .returning('*');

@@ -12,13 +12,13 @@ const getAllMaterialTypes = () => {
 
 // GET MATERIAL TYPE BY ID
 const getMaterialTypeById = (id) => {
-    return db('material_types').where({ auth0_id: id }).first().select('*');
+    return db('material_types').where({ id: id }).first().select('*');
 }
 
 // UPDATE MATERIAL TYPE
 const updateMaterialType = (id, newMaterialTypeData) => {
     return db('material_types')
-        .where({ auth0_id: id })
+        .where({ id: id })
         .first()
         .update(newMaterialTypeData)
         .returning('*');
