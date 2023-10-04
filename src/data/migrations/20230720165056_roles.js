@@ -15,5 +15,5 @@ exports.up = async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists()
+  await knex.schema.dropTableIfExists('roles')
 };
