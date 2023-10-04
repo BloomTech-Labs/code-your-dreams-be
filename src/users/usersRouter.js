@@ -16,7 +16,7 @@ router.get('/', async function (req, res) {
                     })
                 await Chapters.getChapterById(i.chapter_id)
                     .then((chapter) => {
-                        i.chapter = chapter.name
+                        i.chapter_name = chapter.name
                     })
                 return i;
             })
