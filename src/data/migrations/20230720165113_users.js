@@ -8,7 +8,12 @@ exports.up = async (knex) => {
         table.string('auth0_id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
         table.string('email', 200).notNullable().unique()
-        table.string('role').notNullable()
+        table
+          .integer('role_id')
+          .references('id')
+          .inTable('roles')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
         table
           .integer('chapter_id')
           .references('id')
