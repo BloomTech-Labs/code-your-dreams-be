@@ -1,17 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const Users = require('./usersModel');
+const Chapters = require('../chapters/chaptersModel');
+const Roles = require('../roles/rolesModel');
 const axios = require ("axios");
 
 // Get all users
-router.get('/', function (req, res) {
-    console.log(req.auth.payload);
+router.get('/', async function (req, res) {
     Users.getAllUsers()
-        .then((response) => {
-            res.status(200).json(response);
+        .then(async (response) => {
+            let result = response.map(async (i) => {
+                await Roles.getRoleById(i.role_id)
+                    .then((role) => {
+                        i.role = role.role;
+                    })
+                await Chapters.getChapterById(i.chapter_id)
+                    .then((chapter) => {
+                        i.chapter_name = chapter.name
+                    })
+                return i;
+            })
+            return result
+        })
+        .then((final) => {
+            Promise.all(final).then((users) => {
+                res.status(200).json(users)
+            })
         })
         .catch((err) => {
-            res.status(err.status).json({ message: err.message });
+            res.status(500).json({ message: err });
         })
 })
 
@@ -70,9 +87,17 @@ router.post('/create', function (req, res) {
 // Get user by ID
 router.get('/:id', function (req, res) {
     Users.getUserById(req.params.id)
-        .then((response) => {
-            console.log(response);
-            res.status(200).json(response);
+        .then(async (response) => {
+            let result = response
+            await Roles.getRoleById(response.role_id)
+                .then((role) => {
+                    result.role = role.role
+                })
+            await Chapters.getChapterById(response.chapter_id)
+                .then((chapter) => {
+                    result.chapter_name = chapter.name
+                })
+            res.status(200).json(result);
         })
         .catch((err) => {
             res.status(500).json(err);

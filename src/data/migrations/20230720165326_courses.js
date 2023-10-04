@@ -8,6 +8,7 @@ exports.up = async (knex) => {
         table.increments('id').notNullable().unique().primary()
         table.string('name', 200).notNullable()
         table.text('description').notNullable()
+        table.boolean('visibility').notNullable()
         table.timestamps(true, true)
       })
   }

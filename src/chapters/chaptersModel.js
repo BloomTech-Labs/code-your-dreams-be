@@ -11,8 +11,9 @@ const getAllChapters = () => {
 }
 
 // GET CHAPTER BY ID
-const getChapterById = (id) => {
-    return db('chapters').where({ id: id }).first().select('*');
+const getChapterById = async (id) => {
+    let result = await db('chapters').where('id', id).first().select('*');
+    return result;
 }
 
 // UPDATE CHAPTER
