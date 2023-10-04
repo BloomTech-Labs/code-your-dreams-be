@@ -1,17 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const Users = require('./usersModel');
+const Chapters = require('../chapters/chaptersModel');
+const Roles = require('../roles/rolesModel');
 const axios = require ("axios");
 
 // Get all users
-router.get('/', function (req, res) {
-    console.log(req.auth.payload);
+router.get('/', async function (req, res) {
     Users.getAllUsers()
-        .then((response) => {
-            res.status(200).json(response);
+        .then(async (response) => {
+            let result = response.map(async (i) => {
+                await Roles.getRoleById(i.role_id)
+                    .then((role) => {
+                        i.role = role.role;
+                    })
+                await Chapters.getChapterById(i.chapter_id)
+                    .then((chapter) => {
+                        i.chapter = chapter.name
+                    })
+                return i;
+            })
+            return result
+        })
+        .then((final) => {
+            Promise.all(final).then((users) => {
+                res.status(200).json(users)
+            })
         })
         .catch((err) => {
-            res.status(err.status).json({ message: err.message });
+            res.status(500).json({ message: err });
         })
 })
 
