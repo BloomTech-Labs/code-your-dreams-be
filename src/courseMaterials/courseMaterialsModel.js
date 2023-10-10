@@ -15,6 +15,11 @@ const getCourseMaterialById = (id) => {
     return db('course_materials').where({ id: id }).first().select('*');
 }
 
+// GET COURSE MATERIAL BY COURSE ID
+const getMaterialByCourseId = (id) => {
+    return db('course_materials').where({ course_id: id }).select('*');
+}
+
 // UPDATE COURSE MATERIAL
 const updateCourseMaterial = (id, newCourseMaterialData) => {
     return db('course_materials')
@@ -33,6 +38,7 @@ module.exports = {
     createCourseMaterial,
     getAllCourseMaterials,
     getCourseMaterialById,
+    getMaterialByCourseId,
     updateCourseMaterial,
     deleteCourseMaterial
 };

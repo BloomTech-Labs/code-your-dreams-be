@@ -1,12 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const Courses = require('./coursesModel');
+const Materials = require('../courseMaterials/courseMaterialsModel');
+const Permissions = require('../coursePermissions/coursePermissionsModel');
 
 // Get all courses
 router.get('/', function (req, res) {
     Courses.getAllCourses()
-        .then((response) => {
-            res.status(200).json(response);
+        .then(async (response) => {
+            let result = response.map(async (i) => {
+                await Materials.getMaterialByCourseId(i.id)
+                    .then((materials) => {
+                        i.materialsCount = materials.length
+                    })
+                await Permissions.getPermissionByCourseId(i.id)
+                    .then((permissions) => {
+                        i.permissionsCount = permissions.length
+                    })
+                return i
+            })
+            Promise.all(result).then((courses) => {
+                res.status(200).json(courses);
+            })
         })
         .catch((err) => {
             res.status(err.status).json({ message: err.message });

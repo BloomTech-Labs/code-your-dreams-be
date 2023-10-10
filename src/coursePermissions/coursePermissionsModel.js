@@ -15,6 +15,14 @@ const getCoursePermissionById = (id) => {
     return db('course_permissions').where({ id: id }).first().select('*');
 }
 
+// GET COURSE PERMISSION BY COURSE ID
+const getPermissionByCourseId = (id) => {
+    return db('course_permissions')
+        .where({ course_id: id })
+        .where({ access_granted: true })
+        .select('*')
+}
+
 // UPDATE COURSE PERMISSION
 const updateCoursePermission = (id, newCoursePermissionData) => {
     return db('course_permissions')
@@ -33,6 +41,7 @@ module.exports = {
     createCoursePermission,
     getAllCoursePermissions,
     getCoursePermissionById,
+    getPermissionByCourseId,
     updateCoursePermission,
     deleteCoursePermission
 };
