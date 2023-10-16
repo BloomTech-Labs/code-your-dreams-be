@@ -6,7 +6,7 @@ exports.up = async (knex) => {
     await knex.schema
       .createTable('courses', (table) => {
         table.increments('id').notNullable().unique().primary()
-        table.string('name', 200).notNullable()
+        table.string('name', 200).notNullable().unique()
         table.text('description').notNullable()
         table.boolean('visibility').notNullable()
         table.timestamps(true, true)
