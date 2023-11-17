@@ -1,15 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const CoursePermissions = require('./coursePermissionsModel');
+const Courses = require('../courses/coursesModel');
 
 // Get all course permissions
 router.get('/', function (req, res) {
     CoursePermissions.getAllCoursePermissions()
-        .then((response) => {
-            res.status(200).json(response);
+        .then(async (response) => {
+            let permissions = response.map(async (i) => {
+                await Courses.getCourseById(i.course_id)
+                .then((course) => {
+                    i.course_name = course.name;
+                })
+                return i;
+            })
+            Promise.all(permissions).then((permissions) => {
+                res.status(200).json(permissions);
+            })
         })
         .catch((err) => {
-            res.status(err.status).json({ message: err.message });
+            res.status(500).json(err);
         })
 })
 
