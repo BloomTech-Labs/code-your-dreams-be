@@ -20,7 +20,6 @@ exports.up = async (knex) => {
             .inTable('courses')
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
-        table.boolean('access_granted').notNullable()
         table.timestamps(true, true)
       })
   }
