@@ -19,7 +19,6 @@ const getCoursePermissionById = (id) => {
 const getPermissionByCourseId = (id) => {
     return db('course_permissions')
         .where({ course_id: id })
-        .where({ access_granted: true })
         .select('*')
 }
 
